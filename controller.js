@@ -4,7 +4,7 @@ const addWord = (req, res) => {
   const { word, meaning } = req.body;
   model
     .create({ word, meaning })
-    .then(() => res.send("word added"))
+    .then((result) => res.send({ id: result.id, message: "word added" }))
     .catch((err) => res.send({ err }));
 };
 
@@ -28,7 +28,7 @@ const updateWord = (req, res) => {
 const fetchWords = (req, res) => {
   model
     .findAll()
-    .then((data) => res.send({ data }))
+    .then((data) => res.send(data))
     .catch((err) => res.send({ err }));
 };
 
