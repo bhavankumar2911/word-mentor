@@ -1,25 +1,31 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
 import Axios from "axios";
+import Reducer from "./Reducer";
 
 const context = createContext(null);
 
 const ContextProvider = ({ children }) => {
-  const [words, setWords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editWord, setEditWord] = useState("");
   const [editMeaning, setEditMeaning] = useState("");
   const [editId, setEditId] = useState(null);
+  const [words, dispatch] = useReducer(Reducer, []);
 
   const addWord = (id, word, meaning) => {
-    setWords([...words, { id, word, meaning }]);
-    return;
+    console.log(id);
+    dispatch({ type: "ADD_WORD", payload: { id, word, meaning } });
   };
 
-  const deleteWord = (id) => {
-    const tempData = words.filter((word) => word.id != id);
-    setWords(tempData);
-    return;
-  };
+  const deleteWord = (id) => dispatch({ type: "DELETE_WORD", payload: id });
+
+  const updateWord = (id, word, meaning) =>
+    dispatch({ type: "UPDATE_WORD", payload: { id, word, meaning } });
 
   const fillEditForm = (id, word, meaning) => {
     setEditId(id);
@@ -36,7 +42,7 @@ const ContextProvider = ({ children }) => {
           alert("Something went wrong");
           return;
         }
-        setWords(res.data);
+        dispatch({ type: "INITIATE_DATA", payload: res.data });
         return;
       })
       .catch((err) => {
@@ -61,6 +67,7 @@ const ContextProvider = ({ children }) => {
         editId,
         setEditWord,
         setEditMeaning,
+        updateWord,
       }}
     >
       {children}

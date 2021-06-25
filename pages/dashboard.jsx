@@ -27,6 +27,7 @@ const Dashboard = () => {
         ) : (
           <ul>
             {words.map((item) => {
+              console.log(item);
               const { id, word, meaning } = item;
               return <WordItem data={{ id, word, meaning }} key={id} />;
             })}

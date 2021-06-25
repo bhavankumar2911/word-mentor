@@ -3,15 +3,25 @@ import Axios from "axios";
 import { useProvider } from "../context";
 
 const EditForm = () => {
-  const { editId, editWord, editMeaning, setEditWord, setEditMeaning } =
-    useProvider();
+  const {
+    editId,
+    editWord,
+    editMeaning,
+    setEditWord,
+    setEditMeaning,
+    updateWord,
+  } = useProvider();
   const [flashMessage, setFlashMessage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    Axios.put(`/api/${editId}`, { editWord, editMeaning })
+    Axios.put(`/api/${editId}`, { word: editWord, meaning: editMeaning })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
+    setEditWord("");
+    setEditMeaning("");
+    updateWord(editId, editWord, editMeaning);
+    return;
   };
 
   return (
