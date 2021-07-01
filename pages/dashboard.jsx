@@ -18,7 +18,7 @@ const Dashboard = () => {
           referrerpolicy="no-referrer"
         />
       </Head>
-      <h1>Dashboard</h1>
+      <h1 className='text-center my-4 fw-normal text-primary'>Dashboard</h1>
       <Addform />
       <EditForm />
       <section>

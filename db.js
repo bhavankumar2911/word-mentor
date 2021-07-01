@@ -1,11 +1,9 @@
 const { Sequelize } = require("sequelize");
-const { DB, DB_USER, DB_PWD, DB_HOST, DB_DIALECT, DB_PORT } = process.env;
 
-const db = new Sequelize(DB, DB_USER, DB_PWD, {
-  host: DB_HOST,
-  dialect: DB_DIALECT,
-  port: DB_PORT,
-  logging: false,
+// Option 2: Passing parameters separately (sqlite)
+const db = new Sequelize({
+  dialect: 'sqlite',
+  storage: 'word-mentor.sqlite'
 });
 
 module.exports = db;

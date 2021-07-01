@@ -17,6 +17,9 @@ const server = () => {
     .then(() => console.log("connected"))
     .catch((err) => console.log("error", err));
 
+    // creating tables
+    db.sync().then(()=>console.log('tables created...')).catch(err=>console.log('error ====>',err))
+
   app.use(express.json());
 
   // add word
