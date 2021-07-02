@@ -3,11 +3,13 @@ import WordItem from "../components/WordItem";
 import Head from "next/head";
 import Addform from "../components/AddForm";
 import EditForm from "../components/EditForm";
+import React, { useState } from "react";
 
 const Dashboard = () => {
   const { words, loading } = useProvider();
+  const [showEditForm, setShowEditForm] = useState(false);
   return (
-    <div>
+    <div className="bg-dark">
       <Head>
         {/* font awesome */}
         <link
@@ -18,18 +20,25 @@ const Dashboard = () => {
           referrerpolicy="no-referrer"
         />
       </Head>
-      <h1 className='text-center my-4 fw-normal text-primary'>Dashboard</h1>
+      <h1 className="text-center py-5 fw-normal text-light">Dashboard</h1>
       <Addform />
-      <EditForm />
-      <section>
+      <EditForm showEditForm={showEditForm} setShowEditForm={setShowEditForm} />
+      <section className="pb-5">
+        <h2 className="text-center my-5 text-capitalize fw-normal text-light">
+          words
+        </h2>
         {loading ? (
-          <h3>loading....</h3>
+          <h3 className="text-center my-5 fw-normal">loading....</h3>
         ) : (
-          <ul>
+          <ul className="list-group w-50 mx-auto">
             {words.map((item) => {
-              console.log(item);
               const { id, word, meaning } = item;
-              return <WordItem data={{ id, word, meaning }} key={id} />;
+              return (
+                <WordItem
+                  data={{ id, word, meaning, setShowEditForm }}
+                  key={id}
+                />
+              );
             })}
           </ul>
         )}

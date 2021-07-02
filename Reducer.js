@@ -3,7 +3,7 @@ const reducer = (state, action) => {
 
   if (action.type == "ADD_WORD") {
     const { id, word, meaning } = action.payload;
-    return [...state, { id, word, meaning }];
+    return [{ id, word, meaning },...state];
   }
 
   if (action.type == "DELETE_WORD")

@@ -27,7 +27,7 @@ const updateWord = (req, res) => {
 
 const fetchWords = (req, res) => {
   model
-    .findAll()
+    .findAll({order:[['id','DESC']]})
     .then((data) => res.send(data))
     .catch((err) => res.send({ err }));
 };
