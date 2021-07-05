@@ -16,10 +16,27 @@ const ContextProvider = ({ children }) => {
   const [editMeaning, setEditMeaning] = useState("");
   const [editId, setEditId] = useState(null);
   const [words, dispatch] = useReducer(Reducer, []);
+  const [shuffledWords, setShuffledWords] = useState([]);
 
   const addWord = (id, word, meaning) => {
     console.log(id);
     dispatch({ type: "ADD_WORD", payload: { id, word, meaning } });
+  };
+
+  const shuffleWords = () => {
+    let tempWords = [...words];
+    for (let i = 0; i < tempWords.length; i++) {
+      let randomIndex = Math.floor(Math.random() * tempWords.length);
+      let tempWord = tempWords[i];
+      tempWords[i] = tempWords[randomIndex];
+      tempWords[randomIndex] = tempWord;
+    }
+    return tempWords;
+  };
+
+  const prepareTest = (numberOfWords) => {
+    let tempWords = shuffleWords().slice(0, numberOfWords);
+    setShuffledWords(tempWords);
   };
 
   const deleteWord = (id) => dispatch({ type: "DELETE_WORD", payload: id });
@@ -68,6 +85,8 @@ const ContextProvider = ({ children }) => {
         setEditWord,
         setEditMeaning,
         updateWord,
+        prepareTest,
+        shuffledWords,
       }}
     >
       {children}

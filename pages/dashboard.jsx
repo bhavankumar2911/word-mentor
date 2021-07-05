@@ -28,7 +28,7 @@ const Dashboard = () => {
           words
         </h2>
         {loading ? (
-          <h3 className="text-center my-5 fw-normal">loading....</h3>
+          <h3 className="text-center my-5 fw-normal text-light">loading....</h3>
         ) : (
           <ul className="list-group w-50 mx-auto">
             {words.map((item) => {
