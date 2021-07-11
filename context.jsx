@@ -17,7 +17,9 @@ const ContextProvider = ({ children }) => {
   const [editId, setEditId] = useState(null);
   const [words, dispatch] = useReducer(Reducer, []);
   const [shuffledWords, setShuffledWords] = useState([]);
-
+  const [responses, setResponses] = useState([]);
+  const [answers, setAnswers] = useState([]);
+  const [score, setScore] = useState(0);
   const addWord = (id, word, meaning) => {
     console.log(id);
     dispatch({ type: "ADD_WORD", payload: { id, word, meaning } });
@@ -50,6 +52,27 @@ const ContextProvider = ({ children }) => {
     setEditMeaning(meaning);
     return;
   };
+
+  const evaluateScore = () => {
+    let tempScore = score;
+    shuffledWords.forEach((word) => {
+      responses.forEach((response) => {
+        if (word.id == response.id) {
+          console.table(word);
+          console.table(response);
+          console.log(word.meaning);
+          console.log(response.meaning);
+          if (word.meaning == response.meaning) {
+            console.log("correct");
+            tempScore++;
+          }
+        }
+      });
+    });
+    console.log(tempScore);
+    setScore(tempScore);
+  };
+  console.log(score);
 
   const fetchData = () => {
     Axios.get("/api")
@@ -87,6 +110,12 @@ const ContextProvider = ({ children }) => {
         updateWord,
         prepareTest,
         shuffledWords,
+        answers,
+        setAnswers,
+        responses,
+        setResponses,
+        score,
+        evaluateScore,
       }}
     >
       {children}
